@@ -1,0 +1,9 @@
+#crossworks backup files
+*.bak
+*.hzs
+
+#build directories
+UCA0 Debug/
+UCA0 Release/
+UCA1 Debug/
+UCA1 Release/
