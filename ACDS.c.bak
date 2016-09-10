@@ -1,0 +1,113 @@
+#include <msp430.h>
+#include <ctl_api.h>
+#include <stdio.h>
+#include <ARCbus.h>
+#include <string.h>
+#include <SDlib.h>
+#include "ACDS.h"
+
+ACDS_STAT status;
+CTL_EVENT_SET_t ACDS_evt;
+
+void sub_events(void *p) __toplevel{
+  unsigned int e;
+  int i, resp;
+  unsigned char buf[BUS_I2C_HDR_LEN+sizeof(ACDS_STAT)+BUS_I2C_CRC_LEN],*ptr;
+
+  for(;;){
+    e=ctl_events_wait(CTL_EVENT_WAIT_ANY_EVENTS_WITH_AUTO_CLEAR,&SUB_events,SUB_EV_ALL,CTL_TIMEOUT_NONE,0);
+
+//******************* COMMAND TO POWER OFF??? NOTHING HAPPENING HERE **************
+    if(e&SUB_EV_PWR_OFF){
+      //print message
+      puts("System Powering Down\r\n");
+    }
+
+//******************* COMMAND TO POWER ON??? NOTHING HAPPENING HERE **************
+    if(e&SUB_EV_PWR_ON){
+      //print message
+      puts("System Powering Up\r\n");
+    }
+
+//******************* SEND IMG STATUS TO CDH ***************************
+    if(e&SUB_EV_SEND_STAT){
+      //send status
+      puts("Sending status\r\n");
+      //setup packet 
+      ptr=BUS_cmd_init(buf,CMD_ACDS_STAT);
+      //fill in telemetry data
+      for(i=0;i<sizeof(ACDS_STAT);i++){
+        ptr[i]=((unsigned char*)(&status))[i];
+      }
+      //send command
+//      ctl_timeout_wait(ctl_get_current_time()+1);
+      resp=BUS_cmd_tx(BUS_ADDR_CDH,buf,sizeof(ACDS_STAT),0,BUS_I2C_SEND_FOREGROUND);
+      ctl_events_set_clear(&ACDS_evt,ACDS_EVT_STATUS_REQ,0);
+      if(resp!=RET_SUCCESS){
+        printf("Failed to send status %s\r\n",BUS_error_str(resp));
+      }
+    }
+
+
+
+// ******************* RECEIVING DATA OVER SPI *************************
+    if(e&SUB_EV_SPI_DAT){
+      puts("SPI data recived:\r");
+      //First byte contains sender address
+      //Second byte contains data type
+      //free buffer
+      BUS_free_buffer_from_event();
+    }
+
+    if(e&SUB_EV_SPI_ERR_CRC){
+      puts("SPI bad CRC\r");
+    }
+  }
+}
+
+
+//handle COMM specific commands don't wait here.
+int SUB_parseCmd(unsigned char src, unsigned char cmd, unsigned char *dat, unsigned short len){
+  return ERR_UNKNOWN_CMD;
+}
+
+void ACDS_events(void *p) __toplevel{
+  unsigned int e;
+  int i; 
+
+
+  //initialize status
+    status.addr=BUS_ADDR_ACDS;
+    status.flags=0;
+
+
+  //init_event
+  ctl_events_init(&ACDS_evt,0);
+
+  //endless loop
+  for(;;){
+    //wait for events
+    e=ctl_events_wait(CTL_EVENT_WAIT_ANY_EVENTS_WITH_AUTO_CLEAR,&ACDS_evt,ACDS_EVT_ALL,CTL_TIMEOUT_NONE,0);
+
+    //update status
+    if(e&ACDS_EVT_STATUS_REQ){
+       status.mode++;                  //THIS IS FOR TESTING ONLY
+                                  //Eventually need to do some actual stuff here
+    }
+  }
+
+}
+
+void PrintBuffer(char *dat, unsigned int len){
+   int i;
+
+   for(i=0;i<len;i++){
+      printf("0X%02X ",dat[i]); //print MSB first so it is understandable
+      if((i)%15==14){
+        printf("\r\n");
+      }
+    }
+    printf("\r\n");
+}
+
+
