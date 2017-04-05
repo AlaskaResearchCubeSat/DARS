@@ -18,21 +18,22 @@ Then function must be added to the "const CMD_SPEC cmd_tbl[]={{"help"," [command
 
 unsigned short tick = 0;  // set tick to start at motor position one 
 float count;  // so timer can see freq
+char direction; // direction of the motor 
+
 
 int motor_cmd(char *argv[], unsigned short argc){
-char direction;
 unsigned int rpm;
   //check to make sure that there are two inputs, and make sure that the input direction is either forward or backwards
 
-  //if ((argc != 2) || ((*argv[1] != 'F') && (*argv[1] != 'B'))){ // input checking
-    if (((argv[1] != "F ") && (argv[1] != "B "))){ // input checking
+  if ((argc != 2) || ((*argv[1] != 'F') && (*argv[1] != 'B'))){ // input checking
+  //if (((argv[1] != "F ") && (argv[1] != "B "))){ // WHY WONT THIS WORK !?!?!!?!?!?!?!?!?!?!? 
 
    printf("To use the motor command input direction then desired RPM.\n\rmotor [F/B] [RPM]\n\r");
   }
   else{
     direction = *argv[1];             // parse motor direction
     rpm = strtol(argv[2],0,0);        // parse motor RPM
-    count = 32767/(rpm*4);           // convert RPM into timer counts
+    count = 32767/(rpm*2);           // convert RPM into timer counts
     count=count*60;                  //  (had to do the count calculation in 2 steps we ran out of bits)
     TA3CCR0 = count;                // set capture interrupt for motor speed
     TA3CTL |= MC__UP;                 // start timer A0 to trigger motor position 
