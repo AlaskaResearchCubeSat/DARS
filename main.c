@@ -51,7 +51,7 @@ void main(void){
   //turn on LED's this will flash the LED's during startup
   P7DIR=0xFF;
   //init complete turn on LED0 and all others off
-  P7OUT=0x00;
+  P7OUT=0xff;
 
   //TESTING: set log level to report everything by default
   set_error_level(0);
@@ -59,10 +59,10 @@ void main(void){
   //initialize UART
   UCA2_init_UART(UART_PORT,UART_TX_PIN_NUM,UART_RX_PIN_NUM);
 
-  timer_A0_setup(); // setup motor driver interrupts  
+  timer_A1_setup(); // setup motor driver interrupts  
   
   motor_setup();    // configure motor I/O pins 
-
+  //PosOff();
   //setup bus interface
   initARCbus(0x14);   // Default addr for "SYS" subsystem, should be changed for specific subsystems.
 
@@ -76,7 +76,7 @@ void main(void){
 
 
   // creating the tasks
-  ctl_task_run(&terminal_task,BUS_PRI_LOW,terminal,"Example Bare Bones program ready","terminal",sizeof(terminal_stack)/sizeof(terminal_stack[0])-2,terminal_stack-1,0);
+  ctl_task_run(&terminal_task,BUS_PRI_LOW,terminal,"DARS motor code","terminal",sizeof(terminal_stack)/sizeof(terminal_stack[0])-2,terminal_stack-1,0);
   ctl_task_run(&sys_task,BUS_PRI_NORMAL,sys_events,NULL,"SYS_events",sizeof(sys_stack)/sizeof(sys_stack[0])-2,sys_stack-1,0);
   ctl_task_run(&sub_task,BUS_PRI_HIGH,sub_events,NULL,"SUB_events",sizeof(sub_stack)/sizeof(sub_stack[0])-2,sub_stack-1,0);
 

@@ -29,7 +29,8 @@
 #define BUS_PINS_SER      (BUS_PINS_SPI|BUS_PINS_I2C)
 
 //sets up the pins to use with motor all on port 5
-#define MOTOR_INPUT1        BIT1  //  A <-- BLK
+
+#define MOTOR_INPUT1        BIT0  //NOTE  A <-- BLK for the first breakout pin1 is fried
 #define MOTOR_INPUT2        BIT2  // ~A <-- GRN
 #define MOTOR_INPUT3        BIT3  //  B <-- RED
 #define MOTOR_INPUT4        BIT4  // ~B <-- BLU
