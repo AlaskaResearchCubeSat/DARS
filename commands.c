@@ -26,7 +26,7 @@ unsigned int rpm;
   //check to make sure that there are two inputs, and make sure that the input direction is either forward or backwards
 
   if ((argc != 2) || ((*argv[1] != 'F') && (*argv[1] != 'B'))){ // input checking
-  //if (((argv[1] != "F ") && (argv[1] != "B "))){ // WHY WONT THIS WORK !?!?!!?!?!?!?!?!?!?!? 
+  //if ((  && (argv[1] != "B "))){ // WHY WONT THIS WORK !?!?!!?!?!?!?!?!?!?!? 
 
    printf("To use the motor command input direction then desired RPM.\n\rmotor [F/B] [RPM]\n\r");
   }
