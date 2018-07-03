@@ -29,11 +29,14 @@
 #define BUS_PINS_SER      (BUS_PINS_SPI|BUS_PINS_I2C)
 
 //sets up the pins to use with motor all on port 5
+#define MOTOR_INPUT1        BIT7  // A
+#define MOTOR_INPUT2        BIT5  // B 
 
+/* old setup
 #define MOTOR_INPUT1        BIT0  //NOTE  A <-- BLK for the first breakout pin1 is fried
 #define MOTOR_INPUT2        BIT2  // ~A <-- GRN
 #define MOTOR_INPUT3        BIT3  //  B <-- RED
 #define MOTOR_INPUT4        BIT4  // ~B <-- BLU
 #define MOTOR_ENABLE        BIT5  // this is for the H bridge chip ??? not on daughter board ? guessing this is just tied high on daughter board 
-
+*/
 #endif

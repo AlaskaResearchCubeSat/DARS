@@ -8,7 +8,8 @@
 #include "subsystem.h"
 
 void motor_setup(void){
-P5DIR|= MOTOR_INPUT1 | MOTOR_INPUT2 | MOTOR_INPUT3 | MOTOR_INPUT4;  // define motor I/O as outputs 
+P5DIR|= MOTOR_INPUT1 | MOTOR_INPUT2;  // define motor I/O as outputs 
+//P5DIR|= MOTOR_INPUT1 | MOTOR_INPUT2 | MOTOR_INPUT3 | MOTOR_INPUT4;  // define motor I/O as outputs 
 }
 //BLK___   ____     Pos1      Pos2     Pos3    Pos4 
 //      3 | \/ |    NW        NE        SE      SW
@@ -24,6 +25,41 @@ P5DIR|= MOTOR_INPUT1 | MOTOR_INPUT2 | MOTOR_INPUT3 | MOTOR_INPUT4;  // define mo
 //
 //
 
+
+//Justin bread board (w/ inverter chip) 
+void PosOne(void){
+  P5OUT |= MOTOR_INPUT1;  // HIGH
+  P5OUT &= ~MOTOR_INPUT2; // LOW
+}
+
+
+void PosTwo(void){
+  P5OUT |= MOTOR_INPUT1; // HIGH
+  P5OUT |= MOTOR_INPUT2;  // HIGH
+
+}
+
+void PosThree(void){
+  P5OUT &= ~MOTOR_INPUT1; // LOW
+  P5OUT |= MOTOR_INPUT2;  // HIGH
+
+}
+
+void PosFour(void){
+  P5OUT &= ~MOTOR_INPUT1; // LOW
+  P5OUT &= ~MOTOR_INPUT2; // LOW
+
+}
+
+void PosOff(void){
+  P5OUT &= ~MOTOR_INPUT1; // LOW
+  P5OUT &= ~MOTOR_INPUT2; // LOW
+
+  printf("Motor OFF\r\n");
+}
+
+
+/* This configuration is for NMSO PMOS breakout board
 void PosOne(void){
   P5OUT |= MOTOR_INPUT1;  // OFF
   P5OUT |= MOTOR_INPUT2;  // ON
@@ -60,7 +96,7 @@ void PosOff(void){
   P5OUT &= ~MOTOR_INPUT4; // OFF
   printf("Motor OFF\r\n");
 }
-
+*/
 
 //orignal code for Hbridge commands 
 /*

@@ -44,11 +44,11 @@ SYMBOLS BY NAME
    1310e CODE       _PMM_setVCore       
    13054 CODE       _PMM_setVCoreDown   
    12f5a CODE       _PMM_setVCoreUp     
-    f5f0 CODE       _PosFour            
-    f604 CODE       _PosOff             
+    f5de CODE       _PosFour            
+    f5ec CODE       _PosOff             
     f5b4 CODE       _PosOne             
-    f5dc CODE       _PosThree           
-    f5c8 CODE       _PosTwo             
+    f5d0 CODE       _PosThree           
+    f5c2 CODE       _PosTwo             
    153b2 CODE       _SD_error_str       
    11ee6 CODE       _SPI_deactivate     
    11eb2 CODE       _SPI_master_setup   
@@ -167,8 +167,8 @@ SYMBOLS BY NAME
    16078 CODE       ___uint64_to_float32
     1c24 IDATA0     ___ungot            
     509a UDATA0     ___user_format_extender
-    f620 CODE       ___vfprintf         
-    f620 CODE       ___vfprintf_float_long_long
+    f602 CODE       ___vfprintf         
+    f602 CODE       ___vfprintf_float_long_long
    14002 CODE       __record_error      
    15af6 CODE       _abs                
    1183a CODE       _addr_chk           
@@ -491,12 +491,12 @@ SYMBOLS BY VALUE
     f59e CODE       _timer_A1_setup     
     f5ac CODE       _motor_setup        
     f5b4 CODE       _PosOne             
-    f5c8 CODE       _PosTwo             
-    f5dc CODE       _PosThree           
-    f5f0 CODE       _PosFour            
-    f604 CODE       _PosOff             
-    f620 CODE       ___vfprintf_float_long_long
-    f620 CODE       ___vfprintf         
+    f5c2 CODE       _PosTwo             
+    f5d0 CODE       _PosThree           
+    f5de CODE       _PosFour            
+    f5ec CODE       _PosOff             
+    f602 CODE       ___vfprintf_float_long_long
+    f602 CODE       ___vfprintf         
    109a4 CODE       _ctl_private_add_to_task_list
    109f2 CODE       _ctl_private_remove_from_task_list
    10a2c CODE       _ctl_private_reschedule
